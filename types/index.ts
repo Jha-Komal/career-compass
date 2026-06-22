@@ -27,6 +27,7 @@ export type Recommendation = {
   country?: string
   estimatedCost?: string
   publicPrivate?: string
+  ranking?: string
   expectedOutcomes?: string[]
   detail?: {
     whyStrongFit: string

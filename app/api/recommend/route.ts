@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const prompt =
       mode === 'study-abroad'
         ? `You are an expert career coach. Based on the profile below, generate 3-5 university recommendations.
-For each return: title (university name), category (always "education"), matchScore (0-100), country, estimatedCost (total tuition + living as a string), publicPrivate ("Public" or "Private"), whyFit (personalized), expectedOutcomes (string[]), opportunity (one-line summary), skillGaps (empty array), transitionTime (program duration).
+For each return: title (university name), category (always "education"), matchScore (0-100), country, estimatedCost (total tuition + living as a single string like "₹45L total"), publicPrivate ("Public" or "Private"), ranking (e.g. "QS #42" or "Times #110" — use the most well-known ranking for that university), whyFit (2-3 personalized sentences referencing the candidate's background), expectedOutcomes (string[]), opportunity (one-line summary of career outcome post-degree), skillGaps (empty array), transitionTime (program duration e.g. "2 years").
 
 Resume Text: ${resumeText}
 Analysis: ${JSON.stringify(analysis)}
