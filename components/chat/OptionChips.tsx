@@ -17,10 +17,10 @@ export default function OptionChips({ options, selected, onSelect }: OptionChips
             onClick={() => onSelect(opt)}
             className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition-all duration-150
               ${isSelected
-                ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm shadow-indigo-200'
+                ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm shadow-indigo-900/40'
                 : isDisabled
-                  ? 'bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed'
-                  : 'bg-white text-indigo-700 border-indigo-200 hover:bg-indigo-50 hover:border-indigo-400 hover:shadow-sm cursor-pointer active:scale-95'
+                  ? 'bg-muted/40 text-muted-foreground/30 border-border/30 cursor-not-allowed'
+                  : 'bg-card text-indigo-400 border-border hover:bg-indigo-950/50 hover:border-indigo-600 hover:text-indigo-300 cursor-pointer active:scale-95'
               }
             `}
           >

@@ -13,19 +13,19 @@ export default function FinalSummary({ onRestart }: FinalSummaryProps) {
   if (stage !== 'closing') return null
 
   return (
-    <div className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100 text-center animate-message">
-      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center mx-auto mb-3 shadow-sm">
+    <div className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-indigo-950/50 to-violet-950/40 border border-indigo-900/50 text-center animate-message">
+      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center mx-auto mb-3 shadow-sm shadow-indigo-900/40">
         <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
         </svg>
       </div>
-      <h2 className="text-base font-semibold text-gray-900 mb-1">Your Career Compass is Set</h2>
+      <h2 className="text-base font-semibold text-foreground mb-1">Your Career Compass is Set</h2>
       {analysis && (
-        <p className="text-sm text-gray-500 mb-4">
-          As a <strong className="text-gray-700">{analysis.persona}</strong>, your path forward is clearer than ever.
+        <p className="text-sm text-muted-foreground mb-4">
+          As a <strong className="text-foreground">{analysis.persona}</strong>, your path forward is clearer than ever.
         </p>
       )}
-      <Button variant="outline" size="sm" onClick={onRestart} className="border-indigo-200 text-indigo-700 hover:bg-indigo-50">
+      <Button variant="outline" size="sm" onClick={onRestart} className="border-indigo-800 text-indigo-400 hover:bg-indigo-950/50">
         Start a New Session
       </Button>
     </div>
