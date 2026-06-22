@@ -2,8 +2,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai'
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 
-// Both models have 1,500 RPD free — 2.5-flash has only 20 RPD so excluded
-const MODELS = ['gemini-2.0-flash', 'gemini-1.5-flash']
+const MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash']
 
 function getModelForName(name: string) {
   return genAI.getGenerativeModel({
