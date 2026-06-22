@@ -18,7 +18,7 @@ export default function ChatFeed({ onAnswer }: ChatFeedProps) {
   }, [messages, stage])
 
   return (
-    <div className="flex flex-col gap-4 py-4">
+    <div className="flex flex-col gap-5 py-6 px-4">
       {messages.map((msg, i) => (
         <ChatMessage
           key={i}

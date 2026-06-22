@@ -21,11 +21,11 @@ export default function ChatPage() {
   if (!resumeText) return null
 
   return (
-    <main className="min-h-screen bg-white pt-8">
+    <>
       <ChatShell onAnswer={handleAnswer} onExplore={setExploringRec} />
       {exploringRec && (
         <ExploreDrawer rec={exploringRec} onClose={() => setExploringRec(null)} />
       )}
-    </main>
+    </>
   )
 }

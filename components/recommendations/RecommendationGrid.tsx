@@ -21,9 +21,9 @@ export default function RecommendationGrid({ onExplore }: RecommendationGridProp
   }
 
   return (
-    <div className="mt-6">
-      <p className="text-sm font-medium text-gray-500 mb-3">
-        Your top matches — Round {recommendations.length}
+    <div className="mt-4 animate-message">
+      <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-3">
+        Your top matches · Round {recommendations.length}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {currentRound.map((rec) => (
