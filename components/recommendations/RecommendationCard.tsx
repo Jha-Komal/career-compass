@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import type { Recommendation } from '@/types'
 
@@ -26,11 +25,12 @@ function splitToBullets(text: string): [string, string] {
 
 interface RecommendationCardProps {
   rec: Recommendation
+  expanded: boolean
+  onToggleExpand: () => void
   onExplore: (rec: Recommendation) => void
 }
 
-export default function RecommendationCard({ rec, onExplore }: RecommendationCardProps) {
-  const [expanded, setExpanded] = useState(false)
+export default function RecommendationCard({ rec, expanded, onToggleExpand, onExplore }: RecommendationCardProps) {
   const config = CATEGORY_CONFIG[rec.category]
   const [bullet1, bullet2] = splitToBullets(rec.whyFit)
   const isEducation = rec.category === 'education'
@@ -50,22 +50,22 @@ export default function RecommendationCard({ rec, onExplore }: RecommendationCar
       {isEducation && (
         <div className="flex flex-wrap gap-1.5 mb-3">
           {rec.publicPrivate && (
-            <span className="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-amber-950/30 border border-amber-900/40 text-amber-300/80">
+            <span className="text-[11px] px-2 py-0.5 rounded-md bg-amber-950/30 border border-amber-900/40 text-amber-300/80">
               🏛 {rec.publicPrivate}
             </span>
           )}
           {rec.ranking && (
-            <span className="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-amber-950/30 border border-amber-900/40 text-amber-300/80">
+            <span className="text-[11px] px-2 py-0.5 rounded-md bg-amber-950/30 border border-amber-900/40 text-amber-300/80">
               🏆 {rec.ranking}
             </span>
           )}
           {rec.estimatedCost && (
-            <span className="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-amber-950/30 border border-amber-900/40 text-amber-300/80">
+            <span className="text-[11px] px-2 py-0.5 rounded-md bg-amber-950/30 border border-amber-900/40 text-amber-300/80">
               💰 {rec.estimatedCost}
             </span>
           )}
           {rec.country && (
-            <span className="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-amber-950/30 border border-amber-900/40 text-amber-300/80">
+            <span className="text-[11px] px-2 py-0.5 rounded-md bg-amber-950/30 border border-amber-900/40 text-amber-300/80">
               🌍 {rec.country}
             </span>
           )}
@@ -87,7 +87,7 @@ export default function RecommendationCard({ rec, onExplore }: RecommendationCar
 
       {bullet2 && (
         <button
-          onClick={() => setExpanded((e) => !e)}
+          onClick={onToggleExpand}
           className="self-start text-xs text-indigo-400 hover:text-indigo-300 transition-colors mt-1 mb-2"
         >
           {expanded ? 'Show less ↑' : 'Read more →'}
