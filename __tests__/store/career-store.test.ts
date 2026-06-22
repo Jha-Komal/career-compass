@@ -45,6 +45,6 @@ test('setRecDetail patches nested recommendation', () => {
   const rec = { title: 'PM', category: 'switch' as const, matchScore: 90, whyFit: 'x', opportunity: 'y', skillGaps: [], transitionTime: '3m' }
   act(() => result.current.addRecommendationRound([rec]))
   const detail = { whyStrongFit: 'great', existingStrengths: ['leadership'], gapsToClose: ['analytics'], plan90Day: [{ month: 'Month 1', action: 'Learn SQL' }] }
-  act(() => result.current.setRecDetail(0, 0, detail))
+  act(() => result.current.setRecDetail(rec, detail))
   expect(result.current.recommendations[0][0].detail?.whyStrongFit).toBe('great')
 })

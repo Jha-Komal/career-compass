@@ -16,7 +16,7 @@ interface CareerStore {
   addRecommendationRound: (recs: Recommendation[]) => void
   setStage: (s: Stage) => void
   setExploredRec: (r: Recommendation | null) => void
-  setRecDetail: (round: number, idx: number, detail: NonNullable<Recommendation['detail']>) => void
+  setRecDetail: (rec: Recommendation, detail: NonNullable<Recommendation['detail']>) => void
 }
 
 export const useCareerStore = create<CareerStore>((set) => ({
@@ -34,12 +34,11 @@ export const useCareerStore = create<CareerStore>((set) => ({
   addRecommendationRound: (recs) => set((state) => ({ recommendations: [...state.recommendations, recs] })),
   setStage: (s) => set({ stage: s }),
   setExploredRec: (r) => set({ exploredRec: r }),
-  setRecDetail: (round, idx, detail) =>
+  setRecDetail: (rec, detail) =>
     set((state) => ({
-      recommendations: state.recommendations.map((round_recs, ri) =>
-        ri === round
-          ? round_recs.map((rec, ci) => (ci === idx ? { ...rec, detail } : rec))
-          : round_recs
+      recommendations: state.recommendations.map((round_recs) =>
+        round_recs.map((r) => (r.title === rec.title ? { ...r, detail } : r))
       ),
     })),
 }))
+
