@@ -1,5 +1,6 @@
+/** @jest-environment node */
 import { NextRequest, NextResponse } from 'next/server'
-import { getModel } from '@/lib/gemini'
+import { generateWithRetry } from '@/lib/gemini'
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,18 +13,19 @@ export async function POST(req: NextRequest) {
     const buffer = await file.arrayBuffer()
     const base64 = Buffer.from(buffer).toString('base64')
 
-    const model = getModel()
-    const result = await model.generateContent([
-      { inlineData: { mimeType: 'application/pdf', data: base64 } },
-      {
-        text: `You are an expert career coach. The attached PDF is a resume. Read it carefully and return a JSON object with exactly three keys:
+    const result = await generateWithRetry((model) =>
+      model.generateContent([
+        { inlineData: { mimeType: 'application/pdf', data: base64 } },
+        {
+          text: `You are an expert career coach. The attached PDF is a resume. Read it carefully and return a JSON object with exactly three keys:
 1. "resumeText": the full plain text extracted from the resume
 2. "analysis": { "persona": string, "career_stage": string, "strengths": string[], "growth_signals": string[], "career_tensions": string[], "study_abroad_fit": string }
 3. "openingInsight": a 3-4 sentence personalized message that references a specific real observation from the resume, identifies a career tension or opportunity, ends with a forward-looking question, and is NOT generic.
 
 Return only valid JSON.`,
-      },
-    ])
+        },
+      ])
+    ) as { response: { text: () => string } }
 
     const data = JSON.parse(result.response.text())
     return NextResponse.json(data)

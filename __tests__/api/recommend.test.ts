@@ -9,10 +9,8 @@ const mockRecs = [
 ]
 
 jest.mock('@/lib/gemini', () => ({
-  getModel: () => ({
-    generateContent: jest.fn().mockResolvedValue({
-      response: { text: () => JSON.stringify({ recommendations: mockRecs }) },
-    }),
+  generateWithRetry: jest.fn().mockResolvedValue({
+    response: { text: () => JSON.stringify({ recommendations: mockRecs }) },
   }),
 }))
 

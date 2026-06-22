@@ -3,16 +3,14 @@ import { POST } from '@/app/api/analyze/route'
 import { NextRequest } from 'next/server'
 
 jest.mock('@/lib/gemini', () => ({
-  getModel: () => ({
-    generateContent: jest.fn().mockResolvedValue({
-      response: {
-        text: () => JSON.stringify({
-          resumeText: 'Jane Doe PM resume',
-          analysis: { persona: 'Senior IC', career_stage: 'mid', strengths: ['leadership'], growth_signals: ['PM'], career_tensions: ['scope'], study_abroad_fit: 'low' },
-          openingInsight: 'Great background in operations...',
-        }),
-      },
-    }),
+  generateWithRetry: jest.fn().mockResolvedValue({
+    response: {
+      text: () => JSON.stringify({
+        resumeText: 'Jane Doe PM resume',
+        analysis: { persona: 'Senior IC', career_stage: 'mid', strengths: ['leadership'], growth_signals: ['PM'], career_tensions: ['scope'], study_abroad_fit: 'low' },
+        openingInsight: 'Great background in operations...',
+      }),
+    },
   }),
 }))
 

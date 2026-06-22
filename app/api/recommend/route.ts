@@ -1,11 +1,10 @@
+/** @jest-environment node */
 import { NextRequest, NextResponse } from 'next/server'
-import { getModel } from '@/lib/gemini'
+import { generateWithRetry } from '@/lib/gemini'
 
 export async function POST(req: NextRequest) {
   try {
     const { resumeText, analysis, answers, previousTitles = [], mode = 'career' } = await req.json()
-
-    const model = getModel()
 
     const prompt =
       mode === 'study-abroad'
@@ -28,7 +27,10 @@ Answers: ${JSON.stringify(answers)}
 
 Return only valid JSON: { "recommendations": [...] }`
 
-    const result = await model.generateContent(prompt)
+    const result = await generateWithRetry((model) =>
+      model.generateContent(prompt)
+    ) as { response: { text: () => string } }
+
     const data = JSON.parse(result.response.text())
     return NextResponse.json(data)
   } catch (err) {
