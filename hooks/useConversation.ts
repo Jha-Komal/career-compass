@@ -131,7 +131,9 @@ export function useConversation() {
       store.addRecommendationRound(data.recommendations)
       store.setStage('results')
 
-      const shouldOfferStudyAbroad = ['Higher education', 'Open to all options'].includes(answers.openness ?? '')
+      const shouldOfferStudyAbroad =
+        ['Higher education', 'Open to all options'].includes(answers.openness ?? '') ||
+        ['IELTS/GRE/GMAT completed', 'Preparing for exams', 'Planning to start'].includes(answers.educationReadiness ?? '')
       if (shouldOfferStudyAbroad) {
         store.addMessage({
           role: 'ai',

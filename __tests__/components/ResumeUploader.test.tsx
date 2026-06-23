@@ -12,6 +12,7 @@ const mockSetStage = jest.fn()
 
 jest.mock('@/store/career-store', () => ({
   useCareerStore: () => ({
+    reset: jest.fn(),
     setResumeText: mockSetResumeText,
     setAnalysis: mockSetAnalysis,
     addMessage: mockAddMessage,

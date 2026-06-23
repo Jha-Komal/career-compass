@@ -12,7 +12,7 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ onExplore }: DashboardProps) {
-  const { stage, analysis, recommendations, setExploredRec } = useCareerStore()
+  const { stage, analysis, recommendations, setExploredRec, reset } = useCareerStore()
   const [expandedTitles, setExpandedTitles] = useState<Set<string>>(new Set())
   const router = useRouter()
 
@@ -107,7 +107,7 @@ export default function Dashboard({ onExplore }: DashboardProps) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => router.push('/')}
+          onClick={() => { reset(); router.push('/') }}
           className="border-border/60 text-muted-foreground hover:bg-card hover:text-foreground"
         >
           Start a New Session

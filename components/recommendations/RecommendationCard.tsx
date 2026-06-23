@@ -94,6 +94,20 @@ export default function RecommendationCard({ rec, expanded, onToggleExpand, onEx
         </button>
       )}
 
+      {isEducation && rec.expectedOutcomes && rec.expectedOutcomes.length > 0 && (
+        <div className="mt-2">
+          <p className="text-[11px] font-medium text-muted-foreground/60 uppercase tracking-wide mb-1.5">What you'll gain</p>
+          <div className="flex flex-col gap-1">
+            {rec.expectedOutcomes.slice(0, 3).map((outcome) => (
+              <div key={outcome} className="flex gap-1.5 items-start text-xs text-muted-foreground">
+                <span className="text-amber-500 shrink-0 mt-0.5 font-bold">→</span>
+                <span className="line-clamp-1">{outcome}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {rec.skillGaps.length > 0 && (
         <div className="mt-2">
           <p className="text-[11px] font-medium text-muted-foreground/60 uppercase tracking-wide mb-1.5">Skill gaps</p>

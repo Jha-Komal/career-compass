@@ -10,15 +10,15 @@ import type { Recommendation } from '@/types'
 
 export default function ChatPage() {
   const router = useRouter()
-  const { resumeText } = useCareerStore()
+  const { resumeText, _hasHydrated } = useCareerStore()
   const { handleAnswer, editAnswer } = useConversation()
   const [exploringRec, setExploringRec] = useState<Recommendation | null>(null)
 
   useEffect(() => {
-    if (!resumeText) router.replace('/')
-  }, [resumeText, router])
+    if (_hasHydrated && !resumeText) router.replace('/')
+  }, [resumeText, _hasHydrated, router])
 
-  if (!resumeText) return null
+  if (!_hasHydrated || !resumeText) return null
 
   return (
     <>

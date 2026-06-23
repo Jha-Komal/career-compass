@@ -11,13 +11,14 @@ export default function ResumeUploader() {
   const [loading, setLoading] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const { setResumeText, setAnalysis, addMessage, setStage } = useCareerStore()
+  const { setResumeText, setAnalysis, addMessage, setStage, reset } = useCareerStore()
 
   async function handleFile(file: File) {
     if (!file.type.includes('pdf')) {
       setError('Please upload a PDF file.')
       return
     }
+    reset()
     setLoading(true)
     setError(null)
     try {
