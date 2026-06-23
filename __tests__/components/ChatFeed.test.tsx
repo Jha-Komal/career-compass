@@ -13,14 +13,14 @@ jest.mock('@/store/career-store', () => ({
 }))
 
 test('renders all messages', () => {
-  render(<ChatFeed onAnswer={jest.fn()} />)
+  render(<ChatFeed onAnswer={jest.fn()} onEditAnswer={jest.fn()} />)
   expect(screen.getByText('Hello, I reviewed your resume.')).toBeInTheDocument()
   expect(screen.getByText('Thanks!')).toBeInTheDocument()
   expect(screen.getByText('What is your main goal?')).toBeInTheDocument()
 })
 
 test('renders option chips for last AI message with unanswered options', () => {
-  render(<ChatFeed onAnswer={jest.fn()} />)
+  render(<ChatFeed onAnswer={jest.fn()} onEditAnswer={jest.fn()} />)
   expect(screen.getByText('Growth')).toBeInTheDocument()
   expect(screen.getByText('Switch')).toBeInTheDocument()
 })

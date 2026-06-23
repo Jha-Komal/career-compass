@@ -13,7 +13,7 @@ const rec: Recommendation = {
 }
 
 test('renders title, score, and whyFit', () => {
-  render(<RecommendationCard rec={rec} onExplore={jest.fn()} />)
+  render(<RecommendationCard rec={rec} expanded={false} onToggleExpand={jest.fn()} onExplore={jest.fn()} />)
   expect(screen.getByText('Product Manager')).toBeInTheDocument()
   expect(screen.getByText('87%')).toBeInTheDocument()
   expect(screen.getByText('Strong cross-functional skills.')).toBeInTheDocument()
@@ -21,7 +21,7 @@ test('renders title, score, and whyFit', () => {
 
 test('calls onExplore when Explore button clicked', () => {
   const onExplore = jest.fn()
-  render(<RecommendationCard rec={rec} onExplore={onExplore} />)
+  render(<RecommendationCard rec={rec} expanded={false} onToggleExpand={jest.fn()} onExplore={onExplore} />)
   fireEvent.click(screen.getByRole('button', { name: /explore/i }))
   expect(onExplore).toHaveBeenCalledWith(rec)
 })

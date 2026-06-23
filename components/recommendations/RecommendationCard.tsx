@@ -18,7 +18,7 @@ const CATEGORY_CONFIG: Record<Recommendation['category'], {
 function splitToBullets(text: string): [string, string] {
   const sentences = text.match(/[^.!?]+[.!?]+\s*/g) ?? []
   if (sentences.length < 2) return [text.trim(), '']
-  const first = sentences[0].trim()
+  const first = sentences[0]!.trim()
   const rest = sentences.slice(1).join('').trim()
   return [first, rest]
 }
