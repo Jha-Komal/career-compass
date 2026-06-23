@@ -55,7 +55,7 @@ const STUDY_ABROAD_QUESTIONS = [
   },
 ]
 
-const ALL_QUESTIONS = [...QUESTIONS, ...STUDY_ABROAD_QUESTIONS]
+export const ALL_QUESTIONS = [...QUESTIONS, ...STUDY_ABROAD_QUESTIONS]
 
 export function useConversation() {
   const store = useCareerStore()
@@ -79,7 +79,6 @@ export function useConversation() {
   async function answerQuestion(questionKey: keyof UserAnswers, option: string) {
     store.setAnswer(questionKey, option)
 
-    // Mark the last unanswered AI message as selected
     const msgs = useCareerStore.getState().messages
     const lastAiIdx = [...msgs].reverse().findIndex((m) => m.role === 'ai' && m.options?.length && !m.selectedOption)
     if (lastAiIdx !== -1) {
@@ -139,6 +138,8 @@ export function useConversation() {
           content: "Since you're open to higher education, I can also find matching universities for you. Would you like that?",
           options: ['Yes, find universities', 'No thanks'],
         })
+      } else {
+        store.setStage('dashboard')
       }
     } catch {
       store.addMessage({
@@ -170,15 +171,50 @@ export function useConversation() {
       const data = await res.json()
       if (!res.ok || data.error) throw new Error(data.error)
       store.addRecommendationRound(data.recommendations)
-      store.setStage('results')
+      store.setStage('dashboard')
     } catch {
       store.addMessage({ role: 'ai', content: 'Something went wrong. Please try again.', options: ['Retry'] })
       store.setStage('study-abroad')
     }
   }
 
+  function editAnswer(msgIndex: number, newOption: string) {
+    const msgs = useCareerStore.getState().messages
+    const msg = msgs[msgIndex]
+    const q = ALL_QUESTIONS.find((q) => q.content === msg.content)
+    if (!q) return
+
+    const mainIdx = QUESTIONS.findIndex((q2) => q2.key === q.key)
+    const studyIdx = STUDY_ABROAD_QUESTIONS.findIndex((q2) => q2.key === q.key)
+
+    const keysToReset: (keyof UserAnswers)[] =
+      mainIdx !== -1
+        ? [...QUESTIONS.slice(mainIdx).map((q2) => q2.key), ...STUDY_ABROAD_QUESTIONS.map((q2) => q2.key)]
+        : STUDY_ABROAD_QUESTIONS.slice(studyIdx).map((q2) => q2.key)
+
+    const state = useCareerStore.getState()
+    const newAnswers = { ...state.answers }
+    keysToReset.forEach((key) => delete newAnswers[key])
+
+    const truncatedMsgs = msgs
+      .slice(0, msgIndex + 1)
+      .map((m, i) => (i === msgIndex ? { ...m, selectedOption: undefined } : m))
+
+    useCareerStore.setState({
+      messages: truncatedMsgs,
+      answers: newAnswers,
+      recommendations: mainIdx !== -1 ? [] : state.recommendations.slice(0, 1),
+      stage: 'conversation',
+    })
+
+    if (mainIdx !== -1) {
+      studyInitialized.current = false
+    }
+
+    answerQuestion(q.key, newOption)
+  }
+
   function handleAnswer(option: string) {
-    // Special options that aren't question answers
     if (option === 'Yes, find universities') {
       if (!studyInitialized.current) {
         studyInitialized.current = true
@@ -188,7 +224,10 @@ export function useConversation() {
       return
     }
 
-    if (option === 'No thanks') return
+    if (option === 'No thanks') {
+      store.setStage('dashboard')
+      return
+    }
 
     if (option === 'Retry') {
       const state = useCareerStore.getState()
@@ -200,7 +239,6 @@ export function useConversation() {
       return
     }
 
-    // Find the last unanswered AI question to determine which key to use
     const msgs = useCareerStore.getState().messages
     for (let i = msgs.length - 1; i >= 0; i--) {
       const msg = msgs[i]
@@ -214,5 +252,5 @@ export function useConversation() {
     }
   }
 
-  return { handleAnswer }
+  return { handleAnswer, editAnswer }
 }

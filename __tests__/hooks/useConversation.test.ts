@@ -41,7 +41,7 @@ test('handleAnswer with Q1 option advances to Q2', async () => {
   expect(messages[messages.length - 1].content).toContain('direction feels most exciting')
 })
 
-test('handleAnswer after Q5 calls /api/recommend and sets stage to results', async () => {
+test('handleAnswer after Q5 calls /api/recommend and sets stage to dashboard', async () => {
   const mockRecs = [
     { title: 'PM', category: 'switch', matchScore: 90, whyFit: 'x', opportunity: 'y', skillGaps: [], transitionTime: '6m' },
     { title: 'Growth', category: 'switch', matchScore: 85, whyFit: 'x', opportunity: 'y', skillGaps: [], transitionTime: '6m' },
@@ -73,7 +73,7 @@ test('handleAnswer after Q5 calls /api/recommend and sets stage to results', asy
   const { result } = renderHook(() => useConversation())
   await act(async () => result.current.handleAnswer("Haven't explored it yet"))
 
-  await waitFor(() => expect(useCareerStore.getState().stage).toBe('results'))
+  await waitFor(() => expect(useCareerStore.getState().stage).toBe('dashboard'))
   expect(global.fetch).toHaveBeenCalledWith('/api/recommend', expect.objectContaining({ method: 'POST' }))
   expect(useCareerStore.getState().recommendations).toHaveLength(1)
 })

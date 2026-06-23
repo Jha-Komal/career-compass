@@ -5,6 +5,7 @@ interface ChatMessageProps {
   message: ChatMessageType
   isLast: boolean
   onAnswer: (option: string) => void
+  onEditAnswer?: (option: string) => void
 }
 
 function AIAvatar() {
@@ -17,7 +18,7 @@ function AIAvatar() {
   )
 }
 
-export default function ChatMessage({ message, isLast, onAnswer }: ChatMessageProps) {
+export default function ChatMessage({ message, isLast, onAnswer, onEditAnswer }: ChatMessageProps) {
   const isAi = message.role === 'ai'
   return (
     <div className={`flex gap-2.5 animate-message ${isAi ? 'justify-start' : 'justify-end'}`}>
@@ -32,11 +33,12 @@ export default function ChatMessage({ message, isLast, onAnswer }: ChatMessagePr
         >
           {message.content}
         </div>
-        {isAi && message.options && isLast && (
+        {isAi && message.options && (
           <OptionChips
             options={message.options}
             selected={message.selectedOption}
-            onSelect={onAnswer}
+            onSelect={isLast ? onAnswer : (onEditAnswer ?? onAnswer)}
+            editable={!isLast && !!onEditAnswer}
           />
         )}
       </div>

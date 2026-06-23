@@ -1,4 +1,4 @@
-export type Stage = 'analyzing' | 'conversation' | 'results' | 'study-abroad' | 'closing'
+export type Stage = 'analyzing' | 'conversation' | 'results' | 'study-abroad' | 'closing' | 'dashboard'
 
 export type ChatMessage = {
   role: 'ai' | 'user'
@@ -8,6 +8,7 @@ export type ChatMessage = {
 }
 
 export type ResumeAnalysis = {
+  name?: string
   persona: string
   career_stage: string
   strengths: string[]

@@ -11,7 +11,7 @@ import type { Recommendation } from '@/types'
 export default function ChatPage() {
   const router = useRouter()
   const { resumeText } = useCareerStore()
-  const { handleAnswer } = useConversation()
+  const { handleAnswer, editAnswer } = useConversation()
   const [exploringRec, setExploringRec] = useState<Recommendation | null>(null)
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function ChatPage() {
 
   return (
     <>
-      <ChatShell onAnswer={handleAnswer} onExplore={setExploringRec} />
+      <ChatShell onAnswer={handleAnswer} onEditAnswer={editAnswer} onExplore={setExploringRec} />
       {exploringRec && (
         <ExploreDrawer rec={exploringRec} onClose={() => setExploringRec(null)} />
       )}

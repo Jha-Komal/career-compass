@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       base64,
       `You are an expert career coach. The attached PDF is a resume. Read it carefully and return a JSON object with exactly three keys:
 1. "resumeText": the full plain text extracted from the resume
-2. "analysis": { "persona": string, "career_stage": string, "strengths": string[], "growth_signals": string[], "career_tensions": string[], "study_abroad_fit": string }
+2. "analysis": { "name": string (candidate's first name from the resume header), "persona": string, "career_stage": string, "strengths": string[], "growth_signals": string[], "career_tensions": string[], "study_abroad_fit": string }
 3. "openingInsight": a 3-4 sentence personalized message that references a specific real observation from the resume, identifies a career tension or opportunity, ends with a forward-looking question, and is NOT generic.
 
 Return only valid JSON.`,

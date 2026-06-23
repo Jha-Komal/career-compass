@@ -2,15 +2,16 @@
 
 import ChatFeed from './ChatFeed'
 import RecommendationGrid from '@/components/recommendations/RecommendationGrid'
-import FinalSummary from '@/components/recommendations/FinalSummary'
+import Dashboard from '@/components/recommendations/Dashboard'
 import type { Recommendation } from '@/types'
 
 interface ChatShellProps {
   onAnswer: (option: string) => void
+  onEditAnswer: (msgIndex: number, option: string) => void
   onExplore?: (rec: Recommendation) => void
 }
 
-export default function ChatShell({ onAnswer, onExplore }: ChatShellProps) {
+export default function ChatShell({ onAnswer, onEditAnswer, onExplore }: ChatShellProps) {
   return (
     <div className="flex flex-col h-screen bg-background">
       <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-md border-b border-border px-4 py-3 flex items-center gap-3">
@@ -21,16 +22,16 @@ export default function ChatShell({ onAnswer, onExplore }: ChatShellProps) {
         </div>
         <div>
           <p className="text-sm font-semibold text-foreground leading-none">AI Career Compass</p>
-          <p className="text-xs text-indigo-400 mt-0.5">Powered by Gemini</p>
+          <p className="text-xs text-indigo-400 mt-0.5">Powered by AI</p>
         </div>
       </header>
 
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-2xl mx-auto">
-          <ChatFeed onAnswer={onAnswer} />
+          <ChatFeed onAnswer={onAnswer} onEditAnswer={onEditAnswer} />
           <div className="px-4 pb-8">
             <RecommendationGrid onExplore={onExplore} />
-            <FinalSummary />
+            <Dashboard onExplore={onExplore} />
           </div>
         </div>
       </div>
