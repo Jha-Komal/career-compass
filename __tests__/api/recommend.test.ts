@@ -2,16 +2,14 @@
 import { POST } from '@/app/api/recommend/route'
 import { NextRequest } from 'next/server'
 
-const mockRecs = [
-  { title: 'Product Manager', category: 'switch', matchScore: 92, whyFit: 'x', opportunity: 'y', skillGaps: ['analytics'], transitionTime: '6m' },
-  { title: 'Growth Manager', category: 'switch', matchScore: 88, whyFit: 'x', opportunity: 'y', skillGaps: ['sql'], transitionTime: '6m' },
-  { title: 'MBA', category: 'education', matchScore: 80, whyFit: 'x', opportunity: 'y', skillGaps: [], transitionTime: '2y' },
-]
-
 jest.mock('@/lib/gemini', () => ({
-  generateWithRetry: jest.fn().mockResolvedValue({
-    response: { text: () => JSON.stringify({ recommendations: mockRecs }) },
-  }),
+  generateText: jest.fn().mockResolvedValue(JSON.stringify({
+    recommendations: [
+      { title: 'Product Manager', category: 'switch', matchScore: 92, whyFit: 'x', opportunity: 'y', skillGaps: ['analytics'], transitionTime: '6m' },
+      { title: 'Growth Manager', category: 'switch', matchScore: 88, whyFit: 'x', opportunity: 'y', skillGaps: ['sql'], transitionTime: '6m' },
+      { title: 'MBA', category: 'education', matchScore: 80, whyFit: 'x', opportunity: 'y', skillGaps: [], transitionTime: '2y' },
+    ],
+  })),
 }))
 
 function makeRecommendRequest(body: object) {

@@ -1,6 +1,6 @@
 /** @jest-environment node */
 import { NextRequest, NextResponse } from 'next/server'
-import { generateWithRetry } from '@/lib/gemini'
+import { generateText } from '@/lib/gemini'
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,11 +27,8 @@ Answers: ${JSON.stringify(answers)}
 
 Return only valid JSON: { "recommendations": [...] }`
 
-    const result = await generateWithRetry((model) =>
-      model.generateContent(prompt)
-    ) as { response: { text: () => string } }
-
-    const data = JSON.parse(result.response.text())
+    const text = await generateText(prompt)
+    const data = JSON.parse(text)
     return NextResponse.json(data)
   } catch (err) {
     console.error('[/api/recommend]', err)
