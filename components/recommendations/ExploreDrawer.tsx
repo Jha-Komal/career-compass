@@ -96,6 +96,39 @@ export default function ExploreDrawer({ rec, onClose }: ExploreDrawerProps) {
             <p className="text-sm text-red-400 bg-red-950/30 border border-red-900/40 rounded-lg px-3 py-2">{error}</p>
           )}
 
+          <Separator className="bg-border" />
+
+          <a
+            href="https://leapscholar.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`flex items-center justify-between gap-3 w-full px-4 py-3 rounded-xl border transition-all duration-150 group
+              ${rec.category === 'education'
+                ? 'bg-amber-950/30 border-amber-800/60 hover:bg-amber-950/50 hover:border-amber-700'
+                : 'bg-indigo-950/30 border-indigo-800/60 hover:bg-indigo-950/50 hover:border-indigo-700'
+              }
+            `}
+          >
+            <div className="flex items-center gap-2.5">
+              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0
+                ${rec.category === 'education' ? 'bg-amber-950/60' : 'bg-indigo-950/60'}`}
+              >
+                <svg className={`w-4 h-4 ${rec.category === 'education' ? 'text-amber-400' : 'text-indigo-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 3.741-1.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                </svg>
+              </div>
+              <div>
+                <p className={`text-xs font-semibold ${rec.category === 'education' ? 'text-amber-300' : 'text-indigo-300'}`}>
+                  {rec.category === 'education' ? 'Plan your study abroad journey' : 'Explore study abroad options'}
+                </p>
+                <p className="text-[11px] text-muted-foreground/60 mt-0.5">leapscholar.com</p>
+              </div>
+            </div>
+            <svg className={`w-4 h-4 shrink-0 transition-transform group-hover:translate-x-0.5 ${rec.category === 'education' ? 'text-amber-500' : 'text-indigo-500'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+
           {detail && (
             <>
               <Separator className="bg-border" />
